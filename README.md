@@ -4,8 +4,8 @@ A collection of themes for markpub, a markdown publishing tool.
 
 ## Installation
 
-```bash
-uv add markpub-themes
+```shell
+pip install -i https://test.pypi.org/simple/ markpub-themes
 ```
 
 ## Available Themes
@@ -15,9 +15,11 @@ uv add markpub-themes
 ## Usage
 
 ```python
-from markpub_themes import dolce
+import markpub_themes
 
-# Use the theme in your markpub project
+markpub_themes.list_themes()
+
+markpub_themes.get_theme_path('dolce')
 ```
 
 ## License
