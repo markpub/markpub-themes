@@ -12,6 +12,12 @@ pip install -i https://test.pypi.org/simple/ markpub-themes
 
 - **dolce** - A sweet and elegant theme
 
+To see the available themes:  
+
+``` shell
+python -c "import markpub_themes; print(markpub_themes.list_themes())"
+```
+
 ## Usage
 
 ```python
