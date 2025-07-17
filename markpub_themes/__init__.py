@@ -1,7 +1,8 @@
 import os
 from pathlib import Path
+from importlib.metadata import version
 
-__version__ = "0.1.0"
+__version__ = version("markpub-themes")
 
 def get_theme_path(theme_name="default"):
     """Get the path to a specific theme directory."""
