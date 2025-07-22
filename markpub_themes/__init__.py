@@ -1,7 +1,8 @@
 import os
 from pathlib import Path
-from importlib.metadata import version
 
+# synchronize version with pyproject.toml file
+from importlib.metadata import version
 __version__ = version("markpub-themes")
 
 def get_theme_path(theme_name="default"):

@@ -1,6 +1,7 @@
 # markpub_themes
 
-A collection of themes for markpub, a markdown publishing tool.
+A collection of themes for
+[markpub](https://pypi.org/project/markpub), a markdown web publishing package.
 
 ## Installation
 
