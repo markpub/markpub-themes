@@ -10,13 +10,15 @@ authors = [
 requires-python = ">=3.12"
 dependencies = []
 classifiers = [
-    "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.12",
 ]
+
+[project.urls]
+Homepage = "https://github.com/markpub/markpub-themes"
+Issues = "https://github.com/markpub/markpub-themes/issues"
 
 [build-system]
 requires = ["hatchling"]
