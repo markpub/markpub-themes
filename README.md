@@ -6,7 +6,7 @@ A collection of themes for
 ## Installation
 
 ```shell
-pip install -i https://test.pypi.org/simple/ markpub-themes
+pip install markpub-themes
 ```
 
 ## Available Themes
