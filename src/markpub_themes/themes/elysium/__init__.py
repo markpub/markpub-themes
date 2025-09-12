@@ -1,4 +1,4 @@
-# Encore Theme
+# Elysium Theme
 
 # Modern Tailwind CSS reimplementation of the Dolce theme
 # Features responsive design with improved sidebar functionality
