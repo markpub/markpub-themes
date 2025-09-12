@@ -30,7 +30,8 @@ document.getElementById('hide-btn').addEventListener('click', function() {
     document.getElementById('move-btn').classList.remove('hidden');
     addFloatingStyles();
     alignSideColumn();
-    document.getElementById('side-column').style.visibility = 'hidden';
+    document.getElementById('side-column').style.display = 'none';
+    document.getElementById('main-column').classList.remove('ml-8');
     document.getElementById('hamburger-btn').classList.remove('hidden');
     isSideColumnVisibleByUser = false;
 });
@@ -39,18 +40,24 @@ document.getElementById('move-btn').addEventListener('click', function() {
     this.classList.add('hidden');
     document.getElementById('hide-btn').classList.remove('hidden');
     removeFloatingStyles();
-    document.getElementById('side-column').style.visibility = 'visible';
+    document.getElementById('side-column').style.display = '';
+    document.getElementById('main-column').classList.add('ml-8');
     document.getElementById('hamburger-btn').classList.add('hidden');
     isSideColumnVisibleByUser = true;
 });
 
 document.getElementById('hamburger-btn').addEventListener('click', function() {
     const sideColumn = document.getElementById('side-column');
-    if (sideColumn.style.visibility === 'hidden') {
+    const mainColumn = document.getElementById('main-column');
+    if (sideColumn.style.display === 'none' || sideColumn.style.visibility === 'hidden') {
+        sideColumn.style.display = '';
         sideColumn.style.visibility = 'visible';
+        mainColumn.classList.add('ml-8');
         isSideColumnVisibleByUser = true;
     } else {
+        sideColumn.style.display = 'none';
         sideColumn.style.visibility = 'hidden';
+        mainColumn.classList.remove('ml-8');
         addFloatingStyles();
         document.getElementById('move-btn').classList.remove('hidden');
         document.getElementById('hide-btn').classList.add('hidden');
@@ -60,12 +67,14 @@ document.getElementById('hamburger-btn').addEventListener('click', function() {
 
 function handleResize() {
     const sideColumn = document.getElementById('side-column');
+    const mainColumn = document.getElementById('main-column');
     const hamburgerBtn = document.getElementById('hamburger-btn');
     
     if (window.innerWidth < 768) {
         // Mobile view
         addFloatingStyles();
-        sideColumn.style.visibility = 'hidden';
+        sideColumn.style.display = 'none';
+        mainColumn.classList.remove('ml-8');
         hamburgerBtn.classList.remove('hidden');
         document.getElementById('hide-btn').classList.add('hidden');
         document.getElementById('move-btn').classList.remove('hidden');
@@ -73,7 +82,9 @@ function handleResize() {
         // Desktop view
         if (isSideColumnVisibleByUser) {
             removeFloatingStyles();
+            sideColumn.style.display = '';
             sideColumn.style.visibility = 'visible';
+            mainColumn.classList.add('ml-8');
             hamburgerBtn.classList.add('hidden');
             document.getElementById('hide-btn').classList.remove('hidden');
             document.getElementById('move-btn').classList.add('hidden');
