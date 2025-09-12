@@ -1,10 +1,10 @@
 # Elysium
 
-A modern, Tailwind CSS-powered theme for MarkPub, based on the Dolce theme.
+A modern, Tailwind-inspired theme for MarkPub, based on the Dolce theme.
 
 ## Features
 
-- **Modern Design**: Clean, contemporary styling with Tailwind CSS utilities
+- **Modern Design**: Clean, contemporary styling with Tailwind-inspired utilities
 - **Enhanced Markdown Styling**: Comprehensive styling for all markdown elements:
   - Headers (H1-H6) with proper sizing, weights, and visual hierarchy
   - Code blocks with GitHub-style syntax highlighting backgrounds
@@ -30,9 +30,13 @@ A modern, Tailwind CSS-powered theme for MarkPub, based on the Dolce theme.
 
 ## Technical Details
 
-- Built with Tailwind CSS CDN for easy maintenance
+- **Tailwind-inspired approach**: Uses Tailwind's design philosophy and utility class naming conventions
+- **No build process required**: All utility classes are hand-written in CSS, eliminating the need for PostCSS, CLI tools, or build pipelines
+- **Self-contained and production-ready**: No CDN dependencies or external build requirements
+- **Tailwind design tokens**: Follows Tailwind's standard color palette, spacing scale, and typography system
+- **Utility-first HTML**: Maintains Tailwind's approach of using small, single-purpose classes
 - Maintains all original Dolce theme functionality
-- Enhanced JavaScript for better responsive behavior
+- Enhanced JavaScript for better responsive behavior with sidebar space reclamation
 - Comprehensive markdown styling targeting `.prose` class for proper content rendering
 - Clean CSS architecture with `custom.css` reserved for user customizations
 - All theme styles consolidated in `style.css` for maintainability
@@ -44,6 +48,8 @@ A modern, Tailwind CSS-powered theme for MarkPub, based on the Dolce theme.
 - **Enhanced markdown styling**: Added comprehensive CSS for all markdown elements including headers, code blocks, tables, lists, and more
 - **Consolidated CSS architecture**: Moved all theme styles to `style.css`, leaving `custom.css` as a clean placeholder for user customizations
 - **Improved typography**: Better visual hierarchy with proper font sizes, weights, and spacing
+- **Replaced Tailwind CDN**: Removed CDN dependency and implemented utility classes as custom CSS to eliminate production warnings
+- **Fixed sidebar behavior**: Improved horizontal space reclamation when sidebar is hidden
 
 ## Usage
 
