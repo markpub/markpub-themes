@@ -37,7 +37,7 @@
       {% endif %}
     </div>
   </div>
-  <script src="{{websiteroot}}/markpub-static/js/script.js"></script>
+  <script src="{{websiteroot}}/markpub_static/js/script.js"></script>
   {% if bluesky_comments_post %}
   <div id="bluesky-comments"></div>
   <script type="importmap">
@@ -51,7 +51,7 @@
   <script type="module">
     import { createElement } from 'react'
     import { createRoot } from 'react-dom/client'
-    import { BlueskyComments } from 'https://unpkg.com/bluesky-comments@0.9.0/dist/bluesky-comments.es.js'
+    import { BlueskyComments } from 'https://unpkg.com/bluesky-comments@0.12.0/dist/bluesky-comments.es.js'
 
     const uri = '{{bluesky_comments_post}}'
     const container = document.getElementById('bluesky-comments')
