@@ -1,6 +1,6 @@
 [project]
 name = "markpub-themes"
-version = "1.0.2"
+version = "1.1.0"
 description = "Theme collection for markpub"
 readme = "README.md"
 license = "MIT"
