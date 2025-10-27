@@ -1,0 +1,10 @@
+/* Custom CSS
+ * 
+ * Add your custom styles here.
+ * This file is intentionally left mostly empty for user customization.
+ */
+.sidebar-content h3 {
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
