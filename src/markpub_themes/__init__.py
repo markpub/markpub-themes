@@ -1,4 +1,3 @@
-import os
 from pathlib import Path
 
 # synchronize version with pyproject.toml file

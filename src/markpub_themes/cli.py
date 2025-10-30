@@ -1,7 +1,21 @@
+#!/usr/bin/env python3
+
+# setup logging
+import logging, os
+log_level = os.environ.get('LOGLEVEL', 'WARNING').upper()
+
+logging.basicConfig(
+    level=getattr(logging, log_level, 'WARNING'),
+    format="%(asctime)s - %(name)s - %(levelname)s: %(filename)s:%(lineno)d - %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
+)
+logger = logging.getLogger('markpub-themes')
+
 import argparse
 from pathlib import Path
 import shutil
 import sys
+import yaml
 from . import get_theme_path, list_themes, __version__
 
 def clone_theme(theme_name, destination):
@@ -11,18 +25,18 @@ def clone_theme(theme_name, destination):
         dest = Path(destination).expanduser().resolve()
 
         if dest.exists():
-            print(f"Error: Destination '{dest}' already exists", file=sys.stderr)
+            logger.error(f"Error: Destination '{dest}' already exists", file=sys.stderr)
             return 1
 
         shutil.copytree(source, dest)
-        print(f"Theme '{theme_name}' cloned to {dest}")
+        logger.info(f"Theme '{theme_name}' cloned to {dest}")
         return 0
     except ValueError as e:
-        print(f"Error: {e}", file=sys.stderr)
-        print(f"Available themes: {', '.join(list_themes())}")
+        logger.error(f"Error: {e}", file=sys.stderr)
+        print(f"Available themes: {', '.join(sorted(list_themes()))}")
         return 1
     except Exception as e:
-        print(f"Error cloning theme: {e}", file=sys.stderr)
+        logger.error(f"Error cloning theme: {e}", file=sys.stderr)
         return 1
 
 def activate_theme(theme_name, config_file=None):
@@ -31,18 +45,18 @@ def activate_theme(theme_name, config_file=None):
         # Verify theme exists
         theme_path = get_theme_path(theme_name)
 
-        # If config_file is provided, write to it
-        if config_file:
+        if Path(config_file).exists():
             config_path = Path(config_file).expanduser().resolve()
             config_path.parent.mkdir(parents=True, exist_ok=True)
-            with open(config_path, 'w') as f:
-                f.write(f"MARKPUB_THEME={theme_name}\n")
+            with open(config_file,'r',encoding='utf-8') as f:
+                config_doc = yaml.safe_load(f)
+                config_doc['theme'] = theme_name
+            with open(config_file,'w', encoding='utf-8') as f:
+                yaml.safe_dump(config_doc, f, default_flow_style=False, sort_keys=False)
             print(f"Theme '{theme_name}' activated in {config_path}")
         else:
-            # Otherwise just show the theme path
-            print(f"Theme '{theme_name}' is available at: {theme_path}")
-            print(f"\nTo activate, set MARKPUB_THEME environment variable:")
-            print(f"  export MARKPUB_THEME={theme_name}")
+            logger.error(f"{config_file} not found; activation canceled.")
+
         return 0
     except ValueError as e:
         print(f"Error: {e}", file=sys.stderr)
@@ -54,42 +68,49 @@ def activate_theme(theme_name, config_file=None):
 
 def main():
     """Main CLI entry point."""
+    # expected destination and config values
+    markpub_dir = '.'
+    destination = f"{markpub_dir}/themes"
+    config_file = f"{markpub_dir}/markpub.yaml"
+    
     parser = argparse.ArgumentParser(
         prog='markpub-themes',
         description='Manage markpub themes'
     )
-    parser.add_argument('--version', action='version', version=f'%(prog)s {__version__}')
-
-    subparsers = parser.add_subparsers(dest='command', help='Available commands')
-
-    # List command
+    parser.add_argument('--version', '-V', action='version', version=f'%(prog)s {__version__}')
+#    subparsers = parser.add_subparsers(dest='command', help='Available commands')
+    subparsers = parser.add_subparsers(required=True)
+    # subparser for "list" command
     list_parser = subparsers.add_parser('list', help='List available themes')
-
-    # Clone command
-    clone_parser = subparsers.add_parser('clone', help='Clone a theme to a directory')
+    list_parser.set_defaults(cmd='list')
+    # subparser for "clone" command
+    clone_parser = subparsers.add_parser('clone', help='Install a theme in ./markpub/themes directory')
     clone_parser.add_argument('theme', help='Name of the theme to clone')
-    clone_parser.add_argument('destination', help='Destination directory')
-
-    # Activate command
+    clone_parser.set_defaults(cmd='clone')
+    # subparser for "activate" command
     activate_parser = subparsers.add_parser('activate', help='Activate a theme')
     activate_parser.add_argument('theme', help='Name of the theme to activate')
-    activate_parser.add_argument('-c', '--config', help='Config file to write activation to')
+    activate_parser.set_defaults(cmd='activate')
 
     args = parser.parse_args()
+    logger.info(args)
 
-    if args.command == 'list':
-        themes = list_themes()
-        print("Available themes:")
-        for theme in themes:
-            print(f"  - {theme}")
-        return 0
-    elif args.command == 'clone':
-        return clone_theme(args.theme, args.destination)
-    elif args.command == 'activate':
-        return activate_theme(args.theme, args.config)
-    else:
-        parser.print_help()
-        return 0
+    match args[0].cmd:
+        case 'list':
+            themes = list_themes()
+            print("Available themes:")
+            for theme in themes:
+                print(f"  - {theme}")
+        case 'clone':
+        # clone will install theme in local directory and activate
+        # show term-menu theme list
+            return clone_theme(args.theme, destination)
+        case 'activate':
+        # activate updates configuration file
+            return activate_theme(args.theme, config_file)
+        case _:
+            parser.print_help()
+            return
 
 if __name__ == '__main__':
     sys.exit(main())
