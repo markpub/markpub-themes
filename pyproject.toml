@@ -1,6 +1,6 @@
 [project]
 name = "markpub-themes"
-version = "1.1.0"
+version = "2.0.0"
 description = "Theme collection for markpub"
 readme = "README.md"
 license = "MIT"
@@ -19,6 +19,9 @@ classifiers = [
 [project.urls]
 Homepage = "https://github.com/markpub/markpub-themes"
 Issues = "https://github.com/markpub/markpub-themes/issues"
+
+[project.scripts]
+markpub-themes = "markpub_themes.cli:main"
 
 [build-system]
 requires = ["hatchling"]
