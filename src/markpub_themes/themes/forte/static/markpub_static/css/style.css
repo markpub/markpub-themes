@@ -564,6 +564,11 @@ span.incipient-wikilink:hover::after {
   transition: all 0.3s ease;
 }
 
+.sidebar-content h3 {
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
 /* Responsive adjustments */
 @media (max-width: 767px) {
   #flex-container {
