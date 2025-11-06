@@ -69,7 +69,6 @@ def activate_theme(theme_name, config_file=None):
     try:
         # Verify theme exists
         theme_path = get_theme_path(theme_name)
-
         if Path(config_file).exists():
             config_path = Path(config_file).expanduser().resolve()
             config_path.parent.mkdir(parents=True, exist_ok=True)
@@ -79,14 +78,10 @@ def activate_theme(theme_name, config_file=None):
             with open(config_file,'w', encoding='utf-8') as f:
                 yaml.safe_dump(config_doc, f, default_flow_style=False, sort_keys=False)
             print(f"Theme '{theme_name}' activated in {config_path}")
+            return 0
         else:
             logger.error(f"{config_file} not found; activation canceled.")
-
-        return 0
-    except ValueError as e:
-        print(f"Error: {e}", file=sys.stderr)
-        print(f"Available themes: {', '.join(list_themes())}")
-        return 1
+            return 1
     except Exception as e:
         print(f"Error activating theme: {e}", file=sys.stderr)
         return 1
@@ -111,7 +106,7 @@ def main():
     clone_parser = subparsers.add_parser('clone', help='Install a theme in ./markpub/themes directory')
     clone_parser.set_defaults(cmd='clone')
     # subparser for "activate" command
-    activate_parser = subparsers.add_parser('activate', help='Specify theme in config file')
+    activate_parser = subparsers.add_parser('activate', help='Specify theme to use in config file')
     activate_parser.set_defaults(cmd='activate')
 
     args = parser.parse_args()
@@ -125,13 +120,19 @@ def main():
                 print(f"  - {theme}")
         case 'clone':
         # clone installs selected theme in local directory and activates
-            if theme_selected := select_markpub_theme():
-                clone_theme(theme_selected, f"{themes_dir}/{theme_selected}")
-                return activate_theme(theme_selected, config_file)
+            theme_selected = select_markpub_theme()
+            if theme_selected is None:
+                print("Selection canceled.")
+                return 1
+            clone_theme(theme_selected, f"{themes_dir}/{theme_selected}")
+            return activate_theme(theme_selected, config_file)
         case 'activate':
         # activate: updates configuration file "theme" key
-            if theme_selected := select_markpub_theme():
-                return activate_theme(theme_selected, config_file)
+            theme_selected = select_markpub_theme()
+            if theme_selected is None:
+                print("Selection canceled.")
+                return 1
+            return activate_theme(theme_selected, config_file)
         case _:
             parser.print_help()
             return
