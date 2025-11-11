@@ -67,8 +67,9 @@ def clone_theme(theme_name, destination):
 def activate_theme(theme_name, config_file=None):
     """Activate a theme (sets it as the active theme)."""
     try:
-        # Verify theme exists
-        theme_path = get_theme_path(theme_name)
+        # Verify theme_path exists
+        get_theme_path(theme_name)
+
         if Path(config_file).exists():
             config_path = Path(config_file).expanduser().resolve()
             config_path.parent.mkdir(parents=True, exist_ok=True)
