@@ -42,7 +42,7 @@ def clone_theme(theme_name, destination):
 #    if not markpub_dir.exists():
 #        logger.error(f"Directory {directory} is not initialized. Run 'markpub init' first.")
 #        return
-    
+
     try:
         source = Path(get_theme_path(theme_name))
         logging.debug(f"source theme dir: {source}")
@@ -73,7 +73,7 @@ def activate_theme(theme_name, config_file=None):
         if Path(config_file).exists():
             config_path = Path(config_file).expanduser().resolve()
             config_path.parent.mkdir(parents=True, exist_ok=True)
-            with open(config_file,'r',encoding='utf-8') as f:
+            with open(config_file, encoding='utf-8') as f:
                 config_doc = yaml.safe_load(f)
                 config_doc['theme'] = theme_name
             with open(config_file,'w', encoding='utf-8') as f:
@@ -93,7 +93,7 @@ def main():
     markpub_dir = '.'
     themes_dir = f"{markpub_dir}/themes"
     config_file = f"{markpub_dir}/markpub.yaml"
-    
+
     parser = argparse.ArgumentParser(
         prog='markpub-themes',
         description='Manage markpub themes'
@@ -140,4 +140,3 @@ def main():
 
 if __name__ == '__main__':
     sys.exit(main())
-   
