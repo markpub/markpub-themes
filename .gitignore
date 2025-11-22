@@ -5,6 +5,9 @@
 *~
 \#*\#
 
+#authentication
+env.sh
+
 # Python-generated files
 __pycache__/
 *.py[oc]
