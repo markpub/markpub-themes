@@ -56,6 +56,17 @@ body{
     box-shadow: 0 0 0 4px var(--ring);
     border-radius: 10px;
 }
+input{
+    outline: none;
+    border: 1px solid #d1d5db; /* gray-300 */
+}
+input:focus{
+    border: 0px solid #3b82f6 !important;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.3) !important;
+}
+button{
+    border:none;
+}
 
 /* ===== Header ========================================================== */
 header{
